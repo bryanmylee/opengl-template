@@ -36,7 +36,12 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/source)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(sources ${SOURCE_DIR}/main.cpp)
+file(GLOB sources
+    ${SOURCE_DIR}/common/*.cpp
+    ${SOURCE_DIR}/common/*.h
+    ${SOURCE_DIR}/*.glsl
+    ${SOURCE_DIR}/main.cpp
+)
 
 add_executable(opengl-template ${sources} ${includes})
 
@@ -47,9 +52,12 @@ LinkGLFW(opengl-template PRIVATE)
 include(${CMAKE_DIR}/LinkGLAD.cmake)
 LinkGLAD(opengl-template PRIVATE)
 
+include(${CMAKE_DIR}/LinkGLEW.cmake)
+LinkGLEW(opengl-template PRIVATE)
+
 find_package(OpenGL REQUIRED)
 if (OpenGL_FOUND)
-    target_include_directories(opengl-template PRIVATE ${OPENGL_INCLDUE_DIRS})
+    target_include_directories(opengl-template PRIVATE ${OPENGL_INCLUDE_DIRS})
     target_link_libraries(opengl-template PRIVATE ${OPENGL_LIBRARIES})
 else()
     message(FATAL_ERROR "OpenGL was not found on the system")
