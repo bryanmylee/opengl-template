@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 void ProcessInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -35,11 +34,6 @@ int main() {
   }
 
   glfwMakeContextCurrent(window);
-
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    std::cout << "Failed to initialize GLAD\n";
-    return -1;
-  }
 
   // Handle view port dimensions
   glViewport(0, 0, 800, 600);
